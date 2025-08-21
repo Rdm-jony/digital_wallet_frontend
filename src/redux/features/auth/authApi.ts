@@ -31,7 +31,23 @@ const authApi = baseApi.injectEndpoints({
                 data: otpInfo
             })
         }),
+        forgetPassword: builder.mutation<IResponse<null>,{email:string}>({
+            query: (email) => ({
+                url: "/auth/forget-password",
+                method: "POST",
+                data: email
+            })
+        }),
+        resetPassword: builder.mutation<IResponse<null>,{id:string,newPassword:string,token:string}>({
+            query: (resetInfo) => ({
+                url: "/auth/reset-password",
+                method: "POST",
+                
+                headers:{"authorization":resetInfo.token},
+                data: resetInfo
+            })
+        }),
     })
 })
 
-export const {useRegisterMutation,useLoginMutation,useSendOtpMutation,useVerifyOtpMutation } = authApi
+export const {useRegisterMutation,useLoginMutation,useSendOtpMutation,useVerifyOtpMutation,useForgetPasswordMutation,useResetPasswordMutation } = authApi

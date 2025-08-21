@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Link, useNavigate } from "react-router"
 import { toast } from "sonner"
 import { useLoginMutation } from "@/redux/features/auth/authApi"
+import ForgetPassword from "@/pages/ForgetPassword"
 
 const loginFormSchema = z.object({
   email: z.email(),
@@ -38,6 +39,7 @@ export function LoginForm({
       const response = await login(values).unwrap()
       if (response.success) {
         toast.success(response?.message)
+        navigate("/",{replace:true})
       }
     } catch (error: any) {
       console.log(error)
@@ -80,12 +82,14 @@ export function LoginForm({
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password <a
-                    href="#"
-                    className="ml-auto text-sm font-normal underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
+                  <FormLabel className="flex justify-between">Password
+
+                    <ForgetPassword email={form.getValues("email")}>
+                      <p className="ml-auto text-sm font-normal underline-offset-4 hover:underline">
+                        Forgot your password?
+                      </p>
+                    </ForgetPassword>
+
                   </FormLabel>
 
                   <FormControl>
