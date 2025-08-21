@@ -1,4 +1,5 @@
 import App from "@/App";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
@@ -31,5 +32,17 @@ export const router = createBrowserRouter([
     {
         path: "/reset-password",
         Component: ResetPassword
+    },
+    {
+        path: "/admin",
+        Component: DashboardLayout
+    },
+    {
+        path: "/user",
+        Component: DashboardLayout
+    },
+    {
+        path: "/agent",
+        Component: DashboardLayout
     }
 ]);
