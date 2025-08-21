@@ -1,9 +1,9 @@
-import { LoginForm } from "@/components/module/Auth/LoginForm"
 import loginBgImg from "@/assets/images/login.jpg"
 import Logo from "@/assets/icons/Logo"
+import { RegisterForm } from "@/components/module/Auth/RegisterForm"
 
 
-export default function Login() {
+export default function Register() {
     return (
         <div className="flex min-h-svh lg:flex-row-reverse">
             <div className="flex-1">
@@ -18,7 +18,7 @@ export default function Login() {
                     </div>
                     <div className="flex flex-1 items-center justify-center">
                         <div className="w-full max-w-xs">
-                            <LoginForm />
+                            <RegisterForm />
                         </div>
                     </div>
                 </div>
