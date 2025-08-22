@@ -1,4 +1,6 @@
-export type {IRegister} from "@/types/auth/auth.type"
+import type { ComponentType } from "react"
+
+export type { IRegister } from "@/types/auth/auth.type"
 
 export interface IResponse<T> {
     success: boolean,
@@ -6,3 +8,14 @@ export interface IResponse<T> {
     statusCode: number,
     data: T[] | T,
 }
+
+export interface ISidebarItem {
+    title: string,
+    items: {
+        title: string,
+        url: string,
+        component: ComponentType
+    }[]
+}
+
+export type TRole = "SUPER_ADMIN" | "ADMIN" | "USER" | "AGENT"

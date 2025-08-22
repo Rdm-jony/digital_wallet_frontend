@@ -5,7 +5,13 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import ResetPassword from "@/pages/ResetPassword";
 import Verify from "@/pages/Verify";
+import { generateRoutes } from "@/utils/generateRoutes";
 import { createBrowserRouter } from "react-router";
+import { userSidebarItems } from "./userSidebarItems";
+import Unauthorized from "@/pages/Unauthorized";
+import { withAuth } from "@/utils/withAuth";
+import { role } from "@/constants/role";
+import type { TRole } from "@/types";
 
 export const router = createBrowserRouter([
     {
@@ -39,10 +45,15 @@ export const router = createBrowserRouter([
     },
     {
         path: "/user",
-        Component: DashboardLayout
+        Component: withAuth(DashboardLayout, role.USER as TRole),
+        children: [...generateRoutes(userSidebarItems)]
     },
     {
         path: "/agent",
         Component: DashboardLayout
+    },
+    {
+        path: "/unauthorized",
+        Component: Unauthorized
     }
 ]);
