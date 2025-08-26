@@ -1,5 +1,6 @@
 import Logo from "@/assets/icons/Logo";
 import TransactionPieChart from "@/components/module/stat/TransactionPieChart";
+import TransactionFilter from "@/components/module/Transaction/TransactionFilter";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useMyWalletQuery } from "@/redux/features/wallet/walletApi";
 
@@ -8,8 +9,9 @@ const MyWallet = () => {
 
     return (
         <div className="">
+            <TransactionPieChart />
 
-            <div className="flex justify-around">
+            <div className="flex gap-10 my-10">
                 <Card className="bg-primary">
                     <CardContent>
                         <div className="flex justify-between">
@@ -54,7 +56,7 @@ const MyWallet = () => {
                     </CardFooter>
                 </Card>
             </div>
-            <TransactionPieChart />
+            <TransactionFilter />
 
         </div>
     );

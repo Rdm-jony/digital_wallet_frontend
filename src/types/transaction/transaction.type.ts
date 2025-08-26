@@ -7,7 +7,9 @@ export interface ITransaction {
   transferType: TTransferType
   status: TStatus
   amount: number
-  senderWallet: string
+  senderWallet?: string
+  receiverWallet?:string
+  ssl_tran_id?:string
   createdAt: string
 
 }

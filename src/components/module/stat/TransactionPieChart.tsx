@@ -17,7 +17,7 @@ export default function TransactionPieChart() {
     const { data } = useGetStatTransactionQuery(undefined)
 
     return (
-        <div className="w-full h-[400px]">
+        <div className="h-[400px] ">
             <ResponsiveContainer>
                 <PieChart>
                     <Pie
@@ -29,7 +29,7 @@ export default function TransactionPieChart() {
                         outerRadius={120}
                         label
                     >
-                        {data?.map((entry:any, index:number) => (
+                        {data?.map((entry: any, index: number) => (
                             <Cell
                                 key={`cell-${index}`}
                                 fill={COLORS[index % COLORS.length]}

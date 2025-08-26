@@ -1,19 +1,16 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react"
+import {  useId, useMemo, useRef, useState } from "react"
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  FilterFn,
+  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  PaginationState,
-  Row,
-  SortingState,
+  type PaginationState,
+  type SortingState,
   useReactTable,
-  VisibilityState,
+  type VisibilityState,
 } from "@tanstack/react-table"
 import {
   ChevronDownIcon,
@@ -22,44 +19,22 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
-  CircleAlertIcon,
   CircleXIcon,
   Columns3Icon,
-  EllipsisIcon,
   FilterIcon,
   ListFilterIcon,
-  PlusIcon,
-  TrashIcon,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Badge } from "@/components/ui/badge"
+
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
+
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -89,128 +64,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { TransactionFilterColumn } from "./Column"
+import { useHistoryQuery } from "@/redux/features/transaction/transactionApi"
 
-type Item = {
-  id: string
-  name: string
-  email: string
-  location: string
-  flag: string
-  status: "Active" | "Inactive" | "Pending"
-  balance: number
-}
 
-// Custom filter function for multi-column searching
-const multiColumnFilterFn: FilterFn<Item> = (row, columnId, filterValue) => {
-  const searchableRowContent =
-    `${row.original.name} ${row.original.email}`.toLowerCase()
-  const searchTerm = (filterValue ?? "").toLowerCase()
-  return searchableRowContent.includes(searchTerm)
-}
-
-const statusFilterFn: FilterFn<Item> = (
-  row,
-  columnId,
-  filterValue: string[]
-) => {
-  if (!filterValue?.length) return true
-  const status = row.getValue(columnId) as string
-  return filterValue.includes(status)
-}
-
-const columns: ColumnDef<Item>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    size: 28,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    header: "Name",
-    accessorKey: "name",
-    cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("name")}</div>
-    ),
-    size: 180,
-    filterFn: multiColumnFilterFn,
-    enableHiding: false,
-  },
-  {
-    header: "Email",
-    accessorKey: "email",
-    size: 220,
-  },
-  {
-    header: "Location",
-    accessorKey: "location",
-    cell: ({ row }) => (
-      <div>
-        <span className="text-lg leading-none">{row.original.flag}</span>{" "}
-        {row.getValue("location")}
-      </div>
-    ),
-    size: 180,
-  },
-  {
-    header: "Status",
-    accessorKey: "status",
-    cell: ({ row }) => (
-      <Badge
-        className={cn(
-          row.getValue("status") === "Inactive" &&
-            "bg-muted-foreground/60 text-primary-foreground"
-        )}
-      >
-        {row.getValue("status")}
-      </Badge>
-    ),
-    size: 100,
-    filterFn: statusFilterFn,
-  },
-  {
-    header: "Performance",
-    accessorKey: "performance",
-  },
-  {
-    header: "Balance",
-    accessorKey: "balance",
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("balance"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
-      return formatted
-    },
-    size: 120,
-  },
-  {
-    id: "actions",
-    header: () => <span className="sr-only">Actions</span>,
-    cell: ({ row }) => <RowActions row={row} />,
-    size: 60,
-    enableHiding: false,
-  },
-]
-
-export default function Component() {
+export default function TransactionFilter() {
   const id = useId()
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -222,35 +80,18 @@ export default function Component() {
 
   const [sorting, setSorting] = useState<SortingState>([
     {
-      id: "name",
+      id: "amount",
       desc: false,
     },
   ])
+  const { data = []} = useHistoryQuery(undefined)
 
-  const [data, setData] = useState<Item[]>([])
-  useEffect(() => {
-    async function fetchPosts() {
-      const res = await fetch(
-        "https://raw.githubusercontent.com/origin-space/origin-images/refs/heads/main/users-01_fertyx.json"
-      )
-      const data = await res.json()
-      setData(data)
-    }
-    fetchPosts()
-  }, [])
 
-  const handleDeleteRows = () => {
-    const selectedRows = table.getSelectedRowModel().rows
-    const updatedData = data.filter(
-      (item) => !selectedRows.some((row) => row.original.id === item.id)
-    )
-    setData(updatedData)
-    table.resetRowSelection()
-  }
+  
 
   const table = useReactTable({
     data,
-    columns,
+    columns: TransactionFilterColumn,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
@@ -278,19 +119,19 @@ export default function Component() {
     const values = Array.from(statusColumn.getFacetedUniqueValues().keys())
 
     return values.sort()
-  }, [table.getColumn("status")?.getFacetedUniqueValues()])
+  }, [table])
 
   // Get counts for each status
   const statusCounts = useMemo(() => {
     const statusColumn = table.getColumn("status")
     if (!statusColumn) return new Map()
     return statusColumn.getFacetedUniqueValues()
-  }, [table.getColumn("status")?.getFacetedUniqueValues()])
+  }, [table])
 
   const selectedStatuses = useMemo(() => {
     const filterValue = table.getColumn("status")?.getFilterValue() as string[]
     return filterValue ?? []
-  }, [table.getColumn("status")?.getFilterValue()])
+  }, [table])
 
   const handleStatusChange = (checked: boolean, value: string) => {
     const filterValue = table.getColumn("status")?.getFilterValue() as string[]
@@ -322,27 +163,27 @@ export default function Component() {
               ref={inputRef}
               className={cn(
                 "peer min-w-60 ps-9",
-                Boolean(table.getColumn("name")?.getFilterValue()) && "pe-9"
+                Boolean(table.getColumn("senderWallet")?.getFilterValue()) && "pe-9"
               )}
               value={
-                (table.getColumn("name")?.getFilterValue() ?? "") as string
+                (table.getColumn("senderWallet")?.getFilterValue() ?? "") as string
               }
               onChange={(e) =>
-                table.getColumn("name")?.setFilterValue(e.target.value)
+                table.getColumn("senderWallet")?.setFilterValue(e.target.value)
               }
-              placeholder="Filter by name or email..."
+              placeholder="Filter by wallet id"
               type="text"
-              aria-label="Filter by name or email"
+              aria-label="Filter by wallet id"
             />
             <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
               <ListFilterIcon size={16} aria-hidden="true" />
             </div>
-            {Boolean(table.getColumn("name")?.getFilterValue()) && (
+            {Boolean(table.getColumn("senderWallet")?.getFilterValue()) && (
               <button
                 className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Clear filter"
                 onClick={() => {
-                  table.getColumn("name")?.setFilterValue("")
+                  table.getColumn("senderWallet")?.setFilterValue("")
                   if (inputRef.current) {
                     inputRef.current.focus()
                   }
@@ -434,64 +275,7 @@ export default function Component() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="flex items-center gap-3">
-          {/* Delete button */}
-          {table.getSelectedRowModel().rows.length > 0 && (
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button className="ml-auto" variant="outline">
-                  <TrashIcon
-                    className="-ms-1 opacity-60"
-                    size={16}
-                    aria-hidden="true"
-                  />
-                  Delete
-                  <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                    {table.getSelectedRowModel().rows.length}
-                  </span>
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
-                  <div
-                    className="flex size-9 shrink-0 items-center justify-center rounded-full border"
-                    aria-hidden="true"
-                  >
-                    <CircleAlertIcon className="opacity-80" size={16} />
-                  </div>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete{" "}
-                      {table.getSelectedRowModel().rows.length} selected{" "}
-                      {table.getSelectedRowModel().rows.length === 1
-                        ? "row"
-                        : "rows"}
-                      .
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                </div>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeleteRows}>
-                    Delete
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          )}
-          {/* Add user button */}
-          <Button className="ml-auto" variant="outline">
-            <PlusIcon
-              className="-ms-1 opacity-60"
-              size={16}
-              aria-hidden="true"
-            />
-            Add user
-          </Button>
-        </div>
+       
       </div>
 
       {/* Table */}
@@ -511,7 +295,7 @@ export default function Component() {
                         <div
                           className={cn(
                             header.column.getCanSort() &&
-                              "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
+                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
                           )}
                           onClick={header.column.getToggleSortingHandler()}
                           onKeyDown={(e) => {
@@ -579,7 +363,7 @@ export default function Component() {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={TransactionFilterColumn?.length}
                   className="h-24 text-center"
                 >
                   No results.
@@ -629,8 +413,8 @@ export default function Component() {
               {Math.min(
                 Math.max(
                   table.getState().pagination.pageIndex *
-                    table.getState().pagination.pageSize +
-                    table.getState().pagination.pageSize,
+                  table.getState().pagination.pageSize +
+                  table.getState().pagination.pageSize,
                   0
                 ),
                 table.getRowCount()
@@ -718,61 +502,4 @@ export default function Component() {
   )
 }
 
-function RowActions({ row }: { row: Row<Item> }) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <div className="flex justify-end">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="shadow-none"
-            aria-label="Edit item"
-          >
-            <EllipsisIcon size={16} aria-hidden="true" />
-          </Button>
-        </div>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <span>Edit</span>
-            <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <span>Duplicate</span>
-            <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <span>Archive</span>
-            <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>More</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Move to project</DropdownMenuItem>
-                <DropdownMenuItem>Move to folder</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Advanced options</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Share</DropdownMenuItem>
-          <DropdownMenuItem>Add to favorites</DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive focus:text-destructive">
-          <span>Delete</span>
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
+
