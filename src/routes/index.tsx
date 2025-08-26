@@ -13,6 +13,7 @@ import { withAuth } from "@/utils/withAuth";
 import { role } from "@/constants/role";
 import type { TRole } from "@/types";
 import { agentSidebarItems } from "./agentSidebarItems";
+import { adminSidebarItems } from "./adminSidebarItems";
 
 export const router = createBrowserRouter([
     {
@@ -52,7 +53,12 @@ export const router = createBrowserRouter([
     {
         path: "/agent",
         Component: withAuth(DashboardLayout, role.AGENT as TRole),
-        children:[...generateRoutes(agentSidebarItems)]
+        children: [...generateRoutes(agentSidebarItems)]
+    },
+    {
+        path: "/admin",
+        Component: withAuth(DashboardLayout, (role.ADMIN) as TRole),
+        children: [...generateRoutes(adminSidebarItems)]
     },
     {
         path: "/unauthorized",

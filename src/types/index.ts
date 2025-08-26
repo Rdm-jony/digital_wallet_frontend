@@ -2,6 +2,7 @@ import type { ComponentType } from "react"
 
 export type { IRegister } from "@/types/auth/auth.type"
 export type {ITransaction} from "@/types/transaction/transaction.type"
+export type {IWallet} from "@/types/wallet/wallet.type"
 
 export interface IResponse<T> {
     success: boolean,

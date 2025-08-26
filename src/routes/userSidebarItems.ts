@@ -1,7 +1,7 @@
 import MyWallet from "@/pages/MyWallet";
 import { CashOut } from "@/pages/user/CashOut";
 import { SendMoney } from "@/pages/user/SendMoney";
-import { TopUp } from "@/pages/user/TopUp";
+import { TopUp } from "@/pages/TopUp";
 import { Withdraw } from "@/pages/Withdraw";
 import type { ISidebarItem } from "@/types";
 
