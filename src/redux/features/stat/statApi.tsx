@@ -1,7 +1,7 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse } from "@/types";
 
-export const walletApi = baseApi.injectEndpoints({
+export const statApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         topup: builder.mutation<IResponse<{ paymentURL: string }>, { amount: number }>({
             query: (paymentInfo) => ({
@@ -11,9 +11,9 @@ export const walletApi = baseApi.injectEndpoints({
             })
         }),
 
-        myWallet: builder.query({
+        getStatTransaction: builder.query({
             query: () => ({
-                url: `/wallet/me`,
+                url: `/stat/transaction/me`,
                 method: "GET",
             }),
             transformResponse: (res) => res.data
@@ -23,4 +23,4 @@ export const walletApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useTopupMutation, useMyWalletQuery } = walletApi
+export const { useGetStatTransactionQuery } = statApi

@@ -1,32 +1,38 @@
+import MyWallet from "@/pages/MyWallet";
 import { CashOut } from "@/pages/user/CashOut";
 import { SendMoney } from "@/pages/user/SendMoney";
 import { TopUp } from "@/pages/user/TopUp";
 import { Withdraw } from "@/pages/Withdraw";
 import type { ISidebarItem } from "@/types";
 
-export const userSidebarItems:ISidebarItem[]=[
+export const userSidebarItems: ISidebarItem[] = [
     {
-        title:"Services",
-        items:[
+        title: "Services",
+        items: [
             {
-                title:"Send Money",
-                url:"/user/send-money",
-                component:SendMoney
+                title: "My wallet",
+                url: "/user/wallet",
+                component: MyWallet
             },
             {
-                title:"Top Up",
-                url:"/user/top-up",
-                component:TopUp
+                title: "Send Money",
+                url: "/user/send-money",
+                component: SendMoney
             },
             {
-                title:"Cash Out",
-                url:"/user/cashOut",
-                component:CashOut
+                title: "Top Up",
+                url: "/user/top-up",
+                component: TopUp
             },
             {
-                title:"Withdraw",
-                url:"/user/withdraw",
-                component:Withdraw
+                title: "Cash Out",
+                url: "/user/cashOut",
+                component: CashOut
+            },
+            {
+                title: "Withdraw",
+                url: "/user/withdraw",
+                component: Withdraw
             }
         ]
     }
