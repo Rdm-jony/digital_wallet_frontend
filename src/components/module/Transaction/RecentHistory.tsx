@@ -15,23 +15,21 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useHistoryQuery } from "@/redux/features/transaction/transactionApi"
-import { TopUpColumns } from "./Column"
-import { useEffect } from "react"
-import { useSearchParams } from "react-router"
 import type { TTransferType } from "@/types/transaction/transaction.type"
+import { getHistoeryColumn } from "@/utils/getHistoryColumn"
 
 
 
 export default function RecentHistory({ transferType }: { transferType: TTransferType }) {
 
 
-  const { data = [], isLoading } = useHistoryQuery({transferType}, { skip: !transferType })
+  const { data = [], isLoading } = useHistoryQuery({ transferType }, { skip: !transferType })
 
-  
+
 
   const table = useReactTable({
     data,
-    columns: TopUpColumns,
+    columns: getHistoeryColumn(transferType),
     getCoreRowModel: getCoreRowModel(),
   })
   if (isLoading) {
@@ -75,7 +73,7 @@ export default function RecentHistory({ transferType }: { transferType: TTransfe
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={TopUpColumns?.length} className="h-24 text-center">
+              <TableCell colSpan={getHistoeryColumn(transferType)?.length} className="h-24 text-center">
                 No results.
               </TableCell>
             </TableRow>

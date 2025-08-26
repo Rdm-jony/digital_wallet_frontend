@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
+import RecentHistory from "@/components/module/Transaction/RecentHistory"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { transferType } from "@/constants/transferType"
 import { useWithdrawMutation } from "@/redux/features/transaction/transactionApi"
+import type { TTransferType } from "@/types/transaction/transaction.type"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -28,46 +31,49 @@ export function Withdraw() {
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
 
-        const toastId=toast.loading("withdraw...")
+        const toastId = toast.loading("withdraw...")
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         try {
             const response = await withdraw(values).unwrap()
             if (response.success) {
-               toast.success(response?.message,{id:toastId})
+                toast.success(response?.message, { id: toastId })
             }
         } catch (error: any) {
             console.log(error)
-            toast.error(error?.data.message,{id:toastId})
+            toast.error(error?.data.message, { id: toastId })
         }
 
     }
 
     return (
-        <Card className="w-1/3">
-            <CardContent >
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                        <FormField
-                            control={form.control}
-                            name="amount"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Amount</FormLabel>
-                                    <FormControl>
-                                        <Input type="number" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button type="submit">Withdraw</Button>
-                    </form>
-                </Form>
-            </CardContent>
-        </Card>
+        <div>
+            <Card className="w-1/3">
+                <CardContent >
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                            <FormField
+                                control={form.control}
+                                name="amount"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Amount</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" {...field} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            This is your public display name.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit">Withdraw</Button>
+                        </form>
+                    </Form>
+                </CardContent>
+            </Card>
+            <RecentHistory transferType={transferType.WITHDRAW as TTransferType}/>
+        </div>
     )
 }

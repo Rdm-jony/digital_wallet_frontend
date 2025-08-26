@@ -21,6 +21,121 @@ export const TopUpColumns: ColumnDef<ITransaction>[] = [
     accessorKey: "receiverWallet",
   },
   {
+    header: "SSL_Tran_id",
+    accessorKey: "ssl_tran_id",
+  },
+  {
+    header: "Transfer Type",
+    accessorKey: "transferType",
+  },
+  {
+    header: "Amount",
+    accessorKey: "amount",
+    cell: ({ row }) => (
+      <div>
+        <span className="text-lg text-primary font-semibold">{row.original.amount}</span>{" "}
+      </div>
+    ),
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+    cell: ({ row }) => (
+      <Badge
+        className={cn(
+          row.getValue("status") === "SUCCESS" &&
+          "bg-primary text-primary-foreground",
+          row.getValue("status") === "CANCELED" &&
+          "bg-red-500 text-white"
+        )}
+      >
+        {row.getValue("status")}
+      </Badge>
+    ),
+  },
+  {
+    header: () => <div className="text-right">Time</div>,
+    accessorKey: "balance",
+    cell: ({ row }) => {
+      const formatted = format(addHours(new Date(row.original.createdAt), 6), "PPpp")
+      return <div className="text-right">{formatted}</div>
+    },
+  },
+]
+export const SendMoneyColumns: ColumnDef<ITransaction>[] = [
+
+  {
+    header: "Id",
+    accessorKey: "_id",
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue("_id")}</div>
+    ),
+  },
+  {
+    header: "Receiver Wallet",
+    accessorKey: "receiverWallet",
+  },
+  {
+    header: "Sender Wallet",
+    accessorKey: "senderWallet",
+  },
+  {
+    header: "Transfer Type",
+    accessorKey: "transferType",
+  },
+  {
+    header: "Amount",
+    accessorKey: "amount",
+    cell: ({ row }) => (
+      <div>
+        <span className="text-lg text-primary font-semibold">{row.original.amount}</span>{" "}
+      </div>
+    ),
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+    cell: ({ row }) => (
+      <Badge
+        className={cn(
+          row.getValue("status") === "SUCCESS" &&
+          "bg-primary text-primary-foreground",
+          row.getValue("status") === "CANCELED" &&
+          "bg-red-500 text-white"
+        )}
+      >
+        {row.getValue("status")}
+      </Badge>
+    ),
+  },
+  {
+    header: () => <div className="text-right">Time</div>,
+    accessorKey: "balance",
+    cell: ({ row }) => {
+      const formatted = format(addHours(new Date(row.original.createdAt), 6), "PPpp")
+      return <div className="text-right">{formatted}</div>
+    },
+  },
+]
+
+export const WithdrawColumns: ColumnDef<ITransaction>[] = [
+
+  {
+    header: "Id",
+    accessorKey: "_id",
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue("_id")}</div>
+    ),
+  },
+  {
+    header: "Sender Wallet",
+    accessorKey: "senderWallet",
+  },
+  {
+    header: "SSL_Tran_id",
+    accessorKey: "ssl_tran_id",
+  },
+  {
     header: "Transfer Type",
     accessorKey: "transferType",
   },

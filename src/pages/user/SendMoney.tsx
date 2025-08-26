@@ -8,6 +8,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input"
 import { transferType } from "@/constants/transferType"
 import { useSendMoneyMutation } from "@/redux/features/transaction/transactionApi"
+import type { TTransferType } from "@/types/transaction/transaction.type"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -91,7 +92,7 @@ export function SendMoney() {
                     </Form>
                 </CardContent>
             </Card>
-            <RecentHistory transferType={transferType.SENDMONY} />
+            <RecentHistory transferType={transferType.SENDMONY as TTransferType} />
 
         </div>
     )
