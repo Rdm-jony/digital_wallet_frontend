@@ -177,7 +177,7 @@ export const WithdrawColumns: ColumnDef<ITransaction>[] = [
 ]
 
 
-const multiColumnFilterFn: FilterFn<ITransaction> = (row, columnId, filterValue) => {
+const multiColumnFilterFn: FilterFn<ITransaction> = (row, _columnId, filterValue) => {
   console.log(row)
   const searchableRowContent =
     `${row.original.senderWallet} ${row.original.receiverWallet} ${row.original.ssl_tran_id}`.toLowerCase()

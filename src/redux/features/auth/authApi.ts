@@ -93,7 +93,23 @@ export const authApi = baseApi.injectEndpoints({
             invalidatesTags: ["user"]
 
         }),
+        approveAgent: builder.mutation<IResponse<null>, string>({
+            query: (userId) => ({
+                url: `/user/approve-agent/${userId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["user"]
+
+        }),
+        suspendAgent: builder.mutation<IResponse<null>, string>({
+            query: (userId) => ({
+                url: `/user/suspend-agent/${userId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["user"]
+
+        }),
     })
 })
 
-export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useLogoutMutation, useAllUserQuery, useAllAgentQuery, useUpdateUserMutation, useRequestAgentMutation } = authApi
+export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useLogoutMutation, useAllUserQuery, useAllAgentQuery, useUpdateUserMutation, useRequestAgentMutation, useApproveAgentMutation,useSuspendAgentMutation } = authApi

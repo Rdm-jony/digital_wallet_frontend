@@ -20,6 +20,7 @@ import type { IUser } from "@/types/auth/auth.type"
 import { toast } from "sonner"
 import SingleImageUploader from "./SignleImageUploader"
 import { useUpdateUserMutation } from "@/redux/features/auth/authApi"
+import type { FileMetadata } from "@/hooks/use-file-upload"
 
 // ✅ Zod schema
 const updateProfileZodSchema = z.object({
@@ -54,7 +55,7 @@ export default function EditProfile({
   children: ReactNode
   user: Partial<IUser>
 }) {
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<(File | FileMetadata) | null>(null);
   const [open, setOpen] = useState<boolean>(false)
   const [updateUser] = useUpdateUserMutation()
 

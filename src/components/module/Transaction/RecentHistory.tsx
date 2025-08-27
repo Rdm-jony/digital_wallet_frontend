@@ -18,6 +18,7 @@ import { useHistoryQuery } from "@/redux/features/transaction/transactionApi"
 import type { TTransferType } from "@/types/transaction/transaction.type"
 import { getHistoeryColumn } from "@/utils/getHistoryColumn"
 import { History } from "lucide-react"
+import Loader from "@/components/Loader"
 
 
 
@@ -34,7 +35,7 @@ export default function RecentHistory({ transferType }: { transferType: TTransfe
     getCoreRowModel: getCoreRowModel(),
   })
   if (isLoading) {
-    return <p>loading....</p>
+    return <Loader />
   }
 
   return (

@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader"
 import {
     Table,
     TableBody,
@@ -11,7 +12,10 @@ import { useAllAgentQuery } from "@/redux/features/auth/authApi"
 import type { IUser } from "@/types/auth/auth.type"
 
 export function AllAgent() {
-    const { data } = useAllAgentQuery(null)
+    const { data, isLoading } = useAllAgentQuery(null)
+    if (isLoading) {
+        return <Loader />
+    }
     return (
         <Table>
             <TableCaption>A list of all user.</TableCaption>

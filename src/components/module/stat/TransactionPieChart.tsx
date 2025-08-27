@@ -29,7 +29,7 @@ export default function TransactionPieChart() {
                         outerRadius={120}
                         label
                     >
-                        {data?.map((entry: any, index: number) => (
+                        {data?.map((_entry: any, index: number) => (
                             <Cell
                                 key={`cell-${index}`}
                                 fill={COLORS[index % COLORS.length]}

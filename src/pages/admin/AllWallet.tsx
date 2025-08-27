@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Alert } from "@/components/AlertDialog";
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import {
     Table,
@@ -17,7 +18,7 @@ import { toast } from "sonner";
 
 
 export function AllWallet() {
-    const { data } = useAllWalletQuery(undefined)
+    const { data, isLoading } = useAllWalletQuery(undefined)
     const [blockWallet] = useBlockWalletMutation()
     const [unblockWallet] = useUnblockWalletMutation()
 
@@ -45,10 +46,13 @@ export function AllWallet() {
             toast.error(error?.data.message, { id: toastId })
         }
     }
+    if (isLoading) {
+        return <Loader />
+    }
 
     return (
         <Table>
-            
+
             <TableCaption>A list of user wallet.</TableCaption>
             <TableHeader>
                 <TableRow>
@@ -66,7 +70,7 @@ export function AllWallet() {
                         <TableCell>{item?.balance}</TableCell>
                         <TableCell>
                             {
-                                item?.isBlocked ? <Alert onConfirm={()=>handleUnblocked(item?._id)}>
+                                item?.isBlocked ? <Alert onConfirm={() => handleUnblocked(item?._id)}>
                                     <Button className="bg-red-500">Unblocked</Button>
                                 </Alert> : <Alert onConfirm={() => handleBolcked(item?._id)}>
                                     <Button >Blocked</Button>
