@@ -15,6 +15,7 @@ import type { TRole } from "@/types";
 import { agentSidebarItems } from "./agentSidebarItems";
 import { adminSidebarItems } from "./adminSidebarItems";
 import Profile from "@/pages/Profile";
+import About from "@/pages/About";
 
 export const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
             {
                 path: "profile",
                 Component: Profile
+            },
+            {
+                path: "about",
+                Component: About
             }
         ],
     }, {

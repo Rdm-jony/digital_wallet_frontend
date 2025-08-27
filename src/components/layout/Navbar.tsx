@@ -18,10 +18,10 @@ import { Link } from "react-router"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+  { url: "/", label: "Home", active: true },
+  { url: "#", label: "Features" },
+  { url: "#", label: "Pricing" },
+  { url: "/about", label: "About" },
 ]
 
 export default function Navbar() {
@@ -72,7 +72,7 @@ export default function Navbar() {
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
                       <NavigationMenuLink
-                        href={link.href}
+                        href={link.url}
                         className="py-1.5"
                         active={link.active}
                       >
@@ -96,7 +96,7 @@ export default function Navbar() {
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       active={link.active}
-                      href={link.href}
+                      href={link.url}
                       className="text-muted-foreground hover:text-primary py-1.5 font-medium"
                     >
                       {link.label}
