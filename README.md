@@ -1,69 +1,77 @@
-# React + TypeScript + Vite
+# Digital Wallet Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Vercel](https://vercelbadge.vercel.app/api/digital-wallet-frontend-five)](https://digital-wallet-frontend-five.vercel.app)
 
-Currently, two official plugins are available:
+**Live Demo:** [https://digital-wallet-frontend-five.vercel.app](https://digital-wallet-frontend-five.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A modern, secure, and responsive **Digital Wallet Frontend** built with **React, TypeScript, and Shadcn UI**, designed for users, agents, and admins to manage digital transactions efficiently.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Table of Contents
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Overview
+- Features
+- User Roles
+- Tech Stack
+- Installation 
+- Environment Variables 
+- Usage
+- Screenshots 
+- Contributing  
+- License
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Overview
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The Digital Wallet Frontend allows:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Users to manage wallets: top-up via SSL Commerz, withdraw funds, and send money to other users.  
+- Agents to manage user wallets: add or withdraw funds on behalf of users.  
+- Admins to oversee all user and agent activity.  
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+It provides a **dashboard**, **transaction history**, **profile management**, and **agent approval workflow** in a responsive UI.
+
+---
+
+## Features
+
+- **Wallet Overview** – Display wallet balance, recent transactions, and quick actions.  
+- **User Actions** – Top-up, send, or withdraw money securely.  
+- **Agent Dashboard** – Manage user wallets and approve/reject agent requests.  
+- **Admin Dashboard** – Monitor all users, agents, and system activities.  
+- **Authentication** – JWT-based authentication with role-based access.  
+- **Responsive Design** – Optimized for desktop and mobile.  
+- **Shadcn UI Components** – Clean and reusable UI components.  
+- **Charts & Stats** – Visualize user growth, wallet activity, and transactions.  
+
+---
+
+## User Roles
+
+| Role         | Capabilities |
+| ------------ | ------------ |
+| **USER**     | View balance, top-up, withdraw, send money. |
+| **AGENT**    | Add/withdraw money to users, manage transactions. |
+| **ADMIN**    | Full access to users, agents, and system stats. |
+
+---
+
+## Tech Stack
+
+- **Frontend:** React, TypeScript, TailwindCSS, Shadcn UI  
+- **State Management:** Redux Toolkit, RTK Query  
+- **Charts:** Recharts  
+- **Routing:** React Router  
+- **Deployment:** Vercel  
+
+---
+
+## Installation
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/Rdm-jony/digital_wallet_frontend
+cd digital-wallet-frontend
