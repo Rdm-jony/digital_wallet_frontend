@@ -51,7 +51,7 @@ export function SendMoney() {
 
     return (
         <div>
-            <Card className="w-1/3">
+            <Card className="lg:w-1/3">
                 <CardContent >
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -92,6 +92,7 @@ export function SendMoney() {
                     </Form>
                 </CardContent>
             </Card>
+            
             <RecentHistory transferType={transferType.SENDMONY as TTransferType} />
 
         </div>

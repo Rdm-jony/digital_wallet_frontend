@@ -15,17 +15,27 @@ import { ModeToggle } from "../ModeToggle"
 import { useGetMeQuery } from "@/redux/features/auth/authApi"
 import Logout from "../Logout"
 import { Link } from "react-router"
+import { getDashboardLink } from "@/utils/getDsahboardLink"
 
-// Navigation links array to be used in both desktop and mobile menus
-const navigationLinks = [
+// Base navigation links
+const baseLinks = [
   { url: "/", label: "Home", active: true },
-  { url: "#", label: "Features" },
-  { url: "#", label: "Pricing" },
   { url: "/about", label: "About" },
+  { url: "/feature", label: "Features" },
+  { url: "/contact", label: "Contact" },
+  { url: "/faq", label: "Faqs" },
 ]
 
 export default function Navbar() {
   const { data } = useGetMeQuery(undefined)
+
+
+
+  const navigationLinks = [
+    ...baseLinks,
+    ...(getDashboardLink(data) ? [getDashboardLink(data)] : []),
+  ]
+
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -72,11 +82,11 @@ export default function Navbar() {
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
                       <NavigationMenuLink
-                        href={link.url}
+                        asChild
                         className="py-1.5"
                         active={link.active}
                       >
-                        {link.label}
+                        <Link to={link.url}>{link.label}</Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
@@ -84,12 +94,12 @@ export default function Navbar() {
               </NavigationMenu>
             </PopoverContent>
           </Popover>
+
           {/* Main nav */}
           <div className="flex items-center gap-6">
             <a href="#" className="text-primary hover:text-primary/90">
               <Logo />
             </a>
-            {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
                 {navigationLinks.map((link, index) => (
@@ -99,7 +109,7 @@ export default function Navbar() {
                       href={link.url}
                       className="text-muted-foreground hover:text-primary py-1.5 font-medium"
                     >
-                      {link.label}
+                      <Link to={link.url}>{link.label}</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
@@ -107,22 +117,17 @@ export default function Navbar() {
             </NavigationMenu>
           </div>
         </div>
+
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          {
-            data && data?.email ? (
-              // <Button onClick={handleLogout} variant="ghost" size="sm" className="text-sm">
-              //   Logout
-              // </Button>
-              <Logout user={data} />
-            ) :
-              (<Button asChild size="sm" className="text-sm">
-                <Link to="/login">Sign In</Link>
-              </Button>)
-
-          }
-
+          {data && data?.email ? (
+            <Logout user={data} />
+          ) : (
+            <Button asChild size="sm" className="text-sm">
+              <Link to="/login">Sign In</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>

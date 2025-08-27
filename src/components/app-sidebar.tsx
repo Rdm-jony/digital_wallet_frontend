@@ -3,6 +3,7 @@ import * as React from "react"
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -15,6 +16,8 @@ import {
 import { Link } from "react-router"
 import { useGetMeQuery } from "@/redux/features/auth/authApi"
 import { getSidebarItems } from "@/utils/getSidebarItems"
+import Logo from "@/assets/icons/Logo"
+import { Button } from "./ui/button"
 
 // This is sample data.
 
@@ -28,7 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-
+        <Logo />
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
@@ -49,6 +52,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+        <Button>
+          <Link to="/">Back to Home</Link>
+        </Button>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )

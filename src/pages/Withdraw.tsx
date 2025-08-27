@@ -48,7 +48,7 @@ export function Withdraw() {
 
     return (
         <div>
-            <Card className="w-1/3">
+            <Card className="lg:w-1/3">
                 <CardContent >
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

@@ -20,7 +20,7 @@ const Team = () => {
                 {team.map((member, idx) => (
                     <Card
                         key={idx}
-                        className="text-center border border-gray-200 shadow-sm hover:shadow-md transition"
+                        className="text-center border border-primary shadow-sm hover:shadow-md transition"
                     >
                         <CardContent className="pt-6 space-y-4 flex flex-col items-center">
                             <Avatar className="w-20 h-20">

@@ -6,7 +6,7 @@ import Register from "@/pages/Register";
 import ResetPassword from "@/pages/ResetPassword";
 import Verify from "@/pages/Verify";
 import { generateRoutes } from "@/utils/generateRoutes";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import { userSidebarItems } from "./userSidebarItems";
 import Unauthorized from "@/pages/Unauthorized";
 import { withAuth } from "@/utils/withAuth";
@@ -16,6 +16,9 @@ import { agentSidebarItems } from "./agentSidebarItems";
 import { adminSidebarItems } from "./adminSidebarItems";
 import Profile from "@/pages/Profile";
 import About from "@/pages/About";
+import Features from "@/pages/Features";
+import Contact from "@/pages/Contact";
+import Faq from "@/pages/Faq";
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +36,18 @@ export const router = createBrowserRouter([
             {
                 path: "about",
                 Component: About
+            },
+            {
+                path: "feature",
+                Component: Features
+            },
+            {
+                path: "contact",
+                Component: Contact
+            },
+            {
+                path: "faq",
+                Component: Faq
             }
         ],
     }, {
@@ -58,12 +73,12 @@ export const router = createBrowserRouter([
     {
         path: "/user",
         Component: withAuth(DashboardLayout, role.USER as TRole),
-        children: [...generateRoutes(userSidebarItems)]
+        children: [{ index: true, element: <Navigate to="/user/wallet" /> }, ...generateRoutes(userSidebarItems)]
     },
     {
         path: "/agent",
         Component: withAuth(DashboardLayout, role.AGENT as TRole),
-        children: [...generateRoutes(agentSidebarItems)]
+        children: [{ index: true, element: <Navigate to="/agent/wallet" /> }, ...generateRoutes(agentSidebarItems)]
     },
     {
         path: "/admin",

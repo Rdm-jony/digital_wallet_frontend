@@ -22,7 +22,7 @@ const Hero1 = () => {
                         </p>
                         <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
 
-                            <Button asChild variant="outline" className="w-full sm:w-auto">
+                            <Button asChild  className="w-full bg-primary sm:w-auto">
                                 <Link to="/dashboard/user">
                                     Dashboard
                                     <ArrowRight className="size-4" />

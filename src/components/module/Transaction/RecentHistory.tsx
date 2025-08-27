@@ -17,6 +17,7 @@ import {
 import { useHistoryQuery } from "@/redux/features/transaction/transactionApi"
 import type { TTransferType } from "@/types/transaction/transaction.type"
 import { getHistoeryColumn } from "@/utils/getHistoryColumn"
+import { History } from "lucide-react"
 
 
 
@@ -38,6 +39,7 @@ export default function RecentHistory({ transferType }: { transferType: TTransfe
 
   return (
     <div>
+      <h1 className="my-10 flex gap-5 text-muted-foreground"><History /> Recent {transferType} history</h1>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
