@@ -1,77 +1,72 @@
 # Digital Wallet Frontend
 
-[![Vercel](https://vercelbadge.vercel.app/api/digital-wallet-frontend-five)](https://digital-wallet-frontend-five.vercel.app)
-
-**Live Demo:** [https://digital-wallet-frontend-five.vercel.app](https://digital-wallet-frontend-five.vercel.app)
-
-A modern, secure, and responsive **Digital Wallet Frontend** built with **React, TypeScript, and Shadcn UI**, designed for users, agents, and admins to manage digital transactions efficiently.
+**Live Frontend:** [https://digital-wallet-frontend-five.vercel.app](https://digital-wallet-frontend-five.vercel.app)  
+**Backend API:** [https://digital-wallet-beckend.vercel.app](https://digital-wallet-beckend.vercel.app)
 
 ---
 
-## Table of Contents
+## Project Overview
 
-- Overview
-- Features
-- User Roles
-- Tech Stack
-- Installation 
-- Environment Variables 
-- Usage
-- Screenshots 
-- Contributing  
-- License
+The **Digital Wallet Frontend** is a modern web application that allows users, agents, and admins to manage digital wallet transactions securely and efficiently.  
+
+**Key Capabilities:**
+
+- **Users:** 
+  - View wallet balance  
+  - Top-up via SSL Commerz  
+  - Withdraw money  
+  - Send money to other users (by wallet id)  
+  - cashout money to agent
+
+- **Agents:** 
+  - Add or withdraw money on behalf of users  
+  - cashin money to user
+
+- **Admins:** 
+  - Monitor all users, agents, and transactions  
+  - Approve, suspend, or block agent requests  
+
+- **Dashboard & Analytics:** Visualize transactions, user stats, and wallet activities with charts  
+
+- **Authentication & Authorization:** Role-based access with secure login  
 
 ---
 
-## Overview
+## Technology Stack
 
-The Digital Wallet Frontend allows:
-
-- Users to manage wallets: top-up via SSL Commerz, withdraw funds, and send money to other users.  
-- Agents to manage user wallets: add or withdraw funds on behalf of users.  
-- Admins to oversee all user and agent activity.  
-
-It provides a **dashboard**, **transaction history**, **profile management**, and **agent approval workflow** in a responsive UI.
-
+- **Frontend:** React, TypeScript, TailwindCSS, Shadcn UI
+- **State Management:** Redux Toolkit, RTK Query
+- **Charts & Visualization:** Recharts
+- **Routing:** React Router
+- **Deployment:** Vercel
 ---
-
 ## Features
 
-- **Wallet Overview** – Display wallet balance, recent transactions, and quick actions.  
-- **User Actions** – Top-up, send, or withdraw money securely.  
-- **Agent Dashboard** – Manage user wallets and approve/reject agent requests.  
-- **Admin Dashboard** – Monitor all users, agents, and system activities.  
-- **Authentication** – JWT-based authentication with role-based access.  
-- **Responsive Design** – Optimized for desktop and mobile.  
-- **Shadcn UI Components** – Clean and reusable UI components.  
-- **Charts & Stats** – Visualize user growth, wallet activity, and transactions.  
+- **User Dashboard:** Overview of wallet balance, quick actions, and recent transactions  
+- **Agent Management:** Approve, reject, or suspend agent requests  
+- **Charts & Analytics:** Visual representation of user stats and transactions  
+- **Responsive Design:** Works seamlessly on desktop and mobile devices  
+- **Single Image Uploader:** For profile pictures with drag & drop support  
+- **Dark Mode Toggle**  
 
 ---
 
-## User Roles
-
-| Role         | Capabilities |
-| ------------ | ------------ |
-| **USER**     | View balance, top-up, withdraw, send money. |
-| **AGENT**    | Add/withdraw money to users, manage transactions. |
-| **ADMIN**    | Full access to users, agents, and system stats. |
-
----
-
-## Tech Stack
-
-- **Frontend:** React, TypeScript, TailwindCSS, Shadcn UI  
-- **State Management:** Redux Toolkit, RTK Query  
-- **Charts:** Recharts  
-- **Routing:** React Router  
-- **Deployment:** Vercel  
-
----
-
-## Installation
+## Setup Instructions
 
 1. **Clone the repository**
 
 ```bash
 git clone https://github.com/Rdm-jony/digital_wallet_frontend
 cd digital-wallet-frontend
+
+npm install
+# or
+yarn install
+
+VITE_BACKEND_URL=https://digital-wallet-beckend.vercel.app  (.env)
+
+npm run dev
+# or
+yarn dev
+
+
