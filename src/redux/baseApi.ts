@@ -5,9 +5,10 @@ import { axiosBaseQuery } from './axiosbaseQuery'
 // Define a service using a base URL and expected endpoints
 export const baseApi = createApi({
   reducerPath: 'baseApi',
-  baseQuery:axiosBaseQuery(),
+  baseQuery: axiosBaseQuery(),
+  tagTypes: ["wallet", "user", "recentHistory"],
   endpoints: () => ({
-   
+
   }),
 })
 

@@ -1,8 +1,9 @@
+import { Hero1 } from "@/components/module/Home/Hero";
 
 const Home = () => {
     return (
         <div>
-            home
+            <Hero1 />
         </div>
     );
 };
