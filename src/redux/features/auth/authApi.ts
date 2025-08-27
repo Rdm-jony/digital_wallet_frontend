@@ -1,5 +1,6 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IRegister, IResponse } from "@/types";
+import type { IUser } from "@/types/auth/auth.type";
 
 export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -52,6 +53,7 @@ export const authApi = baseApi.injectEndpoints({
                 url: "/user/me",
                 method: "GET"
             }),
+            providesTags: ["user"],
             transformResponse: (res) => res.data
         }),
         logout: builder.mutation<IResponse<null>, null>({
@@ -60,7 +62,38 @@ export const authApi = baseApi.injectEndpoints({
                 method: "POST",
             })
         }),
+        allUser: builder.query({
+            query: () => ({
+                url: "/user/all-users",
+                method: "GET",
+            }),
+            transformResponse: (res: IResponse<IUser>) => res?.data
+        }),
+        allAgent: builder.query({
+            query: () => ({
+                url: "/user/all-agents",
+                method: "GET",
+            }),
+            transformResponse: (res: IResponse<IUser>) => res?.data
+
+        }),
+        updateUser: builder.mutation<IResponse<null>, { data: FormData, id: string }>({
+            query: (userInfo) => ({
+                url: `/user/${userInfo?.id}`,
+                method: "PATCH",
+                data: userInfo.data
+            }),
+            invalidatesTags: ["user"]
+        }),
+        requestAgent: builder.mutation<IResponse<null>, null>({
+            query: () => ({
+                url: `/user/request-agent`,
+                method: "POST",
+            }),
+            invalidatesTags: ["user"]
+
+        }),
     })
 })
 
-export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery,useLogoutMutation } = authApi
+export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useLogoutMutation, useAllUserQuery, useAllAgentQuery, useUpdateUserMutation, useRequestAgentMutation } = authApi

@@ -3,13 +3,6 @@ import type { IResponse, IWallet } from "@/types";
 
 export const walletApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        topup: builder.mutation<IResponse<{ paymentURL: string }>, { amount: number }>({
-            query: (paymentInfo) => ({
-                url: "/transaction/topup",
-                method: "POST",
-                data: paymentInfo
-            })
-        }),
 
         myWallet: builder.query({
             query: () => ({
@@ -17,12 +10,14 @@ export const walletApi = baseApi.injectEndpoints({
                 method: "GET",
             }),
             transformResponse: (res) => res.data
+
         }),
         allWallet: builder.query({
             query: () => ({
                 url: `/wallet/all`,
                 method: "GET",
             }),
+            providesTags: ["wallet"],
             transformResponse: (res: IResponse<IWallet[]>) => res?.data
         }),
         blockWallet: builder.mutation<IResponse<null>, string>({
@@ -30,10 +25,19 @@ export const walletApi = baseApi.injectEndpoints({
                 url: `/wallet/block/${walletId}`,
                 method: "PATCH",
             }),
+            invalidatesTags: ["wallet"]
+        }),
+        unblockWallet: builder.mutation<IResponse<null>, string>({
+            query: (walletId) => ({
+                url: `/wallet/unblock/${walletId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["wallet"]
+
         }),
 
 
     })
 })
 
-export const { useTopupMutation, useMyWalletQuery, useAllWalletQuery, useBlockWalletMutation } = walletApi
+export const { useMyWalletQuery, useAllWalletQuery, useBlockWalletMutation, useUnblockWalletMutation } = walletApi

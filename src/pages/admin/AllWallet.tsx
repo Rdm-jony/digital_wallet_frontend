@@ -10,7 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { useAllWalletQuery, useBlockWalletMutation } from "@/redux/features/wallet/walletApi";
+import { useAllWalletQuery, useBlockWalletMutation, useUnblockWalletMutation } from "@/redux/features/wallet/walletApi";
 import { toast } from "sonner";
 
 
@@ -19,6 +19,7 @@ import { toast } from "sonner";
 export function AllWallet() {
     const { data } = useAllWalletQuery(undefined)
     const [blockWallet] = useBlockWalletMutation()
+    const [unblockWallet] = useUnblockWalletMutation()
 
     const handleBolcked = async (id: string) => {
         console.log(id)
@@ -33,8 +34,21 @@ export function AllWallet() {
         }
     }
 
+    const handleUnblocked = async (id: string) => {
+        const toastId = toast.loading("wallet unblocking...")
+        try {
+            const response = await unblockWallet(id).unwrap()
+            if (response?.success) {
+                toast.success(response?.message, { id: toastId })
+            }
+        } catch (error: any) {
+            toast.error(error?.data.message, { id: toastId })
+        }
+    }
+
     return (
         <Table>
+            
             <TableCaption>A list of user wallet.</TableCaption>
             <TableHeader>
                 <TableRow>
@@ -52,7 +66,7 @@ export function AllWallet() {
                         <TableCell>{item?.balance}</TableCell>
                         <TableCell>
                             {
-                                item?.isBlocked ? <Alert>
+                                item?.isBlocked ? <Alert onConfirm={()=>handleUnblocked(item?._id)}>
                                     <Button className="bg-red-500">Unblocked</Button>
                                 </Alert> : <Alert onConfirm={() => handleBolcked(item?._id)}>
                                     <Button >Blocked</Button>

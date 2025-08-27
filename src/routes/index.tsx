@@ -14,6 +14,7 @@ import { role } from "@/constants/role";
 import type { TRole } from "@/types";
 import { agentSidebarItems } from "./agentSidebarItems";
 import { adminSidebarItems } from "./adminSidebarItems";
+import Profile from "@/pages/Profile";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
                 path: "/",
                 Component: Home,
             },
+            {
+                path: "profile",
+                Component: Profile
+            }
         ],
     }, {
         path: "/login",
