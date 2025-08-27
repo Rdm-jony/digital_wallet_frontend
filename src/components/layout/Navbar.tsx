@@ -84,9 +84,8 @@ export default function Navbar() {
                       <NavigationMenuLink
                         asChild
                         className="py-1.5"
-                        active={link.active}
                       >
-                        <Link to={link.url}>{link.label}</Link>
+                        <Link to={link?.url ?? "/"}>{link?.label}</Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
@@ -105,11 +104,9 @@ export default function Navbar() {
                 {navigationLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
-                      active={link.active}
-                      href={link.url}
                       className="text-muted-foreground hover:text-primary py-1.5 font-medium"
                     >
-                      <Link to={link.url}>{link.label}</Link>
+                      <Link to={link?.url ?? "/"}>{link?.label}</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}

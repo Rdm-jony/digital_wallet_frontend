@@ -19,6 +19,9 @@ import About from "@/pages/About";
 import Features from "@/pages/Features";
 import Contact from "@/pages/Contact";
 import Faq from "@/pages/Faq";
+import PaymentSuccess from "@/pages/payment/PaymentSuccess";
+import PaymentFailed from "@/pages/payment/PaymentFailed";
+import PaymentCancelled from "@/pages/payment/PaymentCancel";
 
 export const router = createBrowserRouter([
     {
@@ -88,5 +91,17 @@ export const router = createBrowserRouter([
     {
         path: "/unauthorized",
         Component: Unauthorized
+    },
+    {
+        path: "/payment/success",
+        Component: PaymentSuccess
+    },
+    {
+        path: "/payment/fail",
+        Component: PaymentFailed
+    },
+    {
+        path: "/payment/cancel",
+        Component: PaymentCancelled
     }
 ]);

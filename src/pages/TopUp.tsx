@@ -19,7 +19,7 @@ const formSchema = z.object({
 })
 
 export function TopUp() {
-    const [topup] = useTopupMutation()
+    const [topup, { isLoading }] = useTopupMutation()
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema) as any,
@@ -52,7 +52,7 @@ export function TopUp() {
 
     return (
         <div>
-            <Card className="lg:w-1/3">
+            <Card className="lg:w-1/3 mx-auto">
                 <CardContent >
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -72,12 +72,12 @@ export function TopUp() {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit">Top Up</Button>
+                            <Button type="submit" disabled={isLoading}>Top Up</Button>
                         </form>
                     </Form>
                 </CardContent>
             </Card>
-            <RecentHistory transferType={transferType.TOPUP as TTransferType}/>
+            <RecentHistory transferType={transferType.TOPUP as TTransferType} />
         </div>
     )
 }
