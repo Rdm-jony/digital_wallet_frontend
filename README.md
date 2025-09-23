@@ -1,72 +1,94 @@
-# Digital Wallet Frontend
+# Healthcare Appointment System - Frontend
 
-**Live Frontend:** [https://digital-wallet-frontend-five.vercel.app](https://digital-wallet-frontend-five.vercel.app)  
-**Backend API:** [https://digital-wallet-beckend.vercel.app](https://digital-wallet-beckend.vercel.app)
-
----
-
-## Project Overview
-
-The **Digital Wallet Frontend** is a modern web application that allows users, agents, and admins to manage digital wallet transactions securely and efficiently.  
-
-**Key Capabilities:**
-
-- **Users:** 
-  - View wallet balance  
-  - Top-up via SSL Commerz  
-  - Withdraw money  
-  - Send money to other users (by wallet id)  
-  - cashout money to agent
-
-- **Agents:** 
-  - Add or withdraw money on behalf of users  
-  - cashin money to user
-
-- **Admins:** 
-  - Monitor all users, agents, and transactions  
-  - Approve, suspend, or block agent requests  
-
-- **Dashboard & Analytics:** Visualize transactions, user stats, and wallet activities with charts  
-
-- **Authentication & Authorization:** Role-based access with secure login  
+A modern, responsive frontend for a Healthcare Appointment System built with **React**, **Vite**, **Tailwind CSS**, and **DaisyUI**. This application allows patients to browse doctors, book appointments, and manage their schedules seamlessly.
 
 ---
 
-## Technology Stack
-
-- **Frontend:** React, TypeScript, TailwindCSS, Shadcn UI
-- **State Management:** Redux Toolkit, RTK Query
-- **Charts & Visualization:** Recharts
-- **Routing:** React Router
-- **Deployment:** Vercel
----
-## Features
-
-- **User Dashboard:** Overview of wallet balance, quick actions, and recent transactions  
-- **Agent Management:** Approve, reject, or suspend agent requests  
-- **Charts & Analytics:** Visual representation of user stats and transactions  
-- **Responsive Design:** Works seamlessly on desktop and mobile devices  
-- **Single Image Uploader:** For profile pictures with drag & drop support  
-- **Dark Mode Toggle**  
+## 💗 Live Demo
+- [Frontend Live URL](https://health-care-frontend-ten.vercel.app)
 
 ---
 
-## Setup Instructions
+## 🛠 Technologies Used
+- **React.js** - Frontend library for building interactive UI  
+- **Vite** - Next-generation, fast build tool  
+- **Tailwind CSS** - Utility-first CSS framework for styling  
+- **DaisyUI** - Tailwind CSS components for rapid UI development  
+- **React Router** - Client-side routing  
+- **Axios** - HTTP client for API requests  
+- **Context API / Redux** - State management (if used)  
+- **ESLint & Prettier** - Code quality and formatting  
 
-1. **Clone the repository**
+---
 
+## ⚡ Features
+- Browse **doctor profiles** with details and availability  
+- **Book, reschedule, and cancel appointments**  
+- Responsive UI for **desktop and mobile**  
+- **Authentication system** with login and registration (JWT based)  
+- Seamless integration with **backend API**  
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
 ```bash
-git clone https://github.com/Rdm-jony/digital_wallet_frontend
-cd digital-wallet-frontend
+git clone https://github.com/yourusername/healthcare-frontend.git
+cd healthcare-frontend
+```
 
+### 2. Install dependencies
+```bash
 npm install
-# or
-yarn install
+```
 
-VITE_BACKEND_URL=https://digital-wallet-beckend.vercel.app  (.env)
+### 3. Configure environment variables
+Create a `.env` file in the root directory:
+```
+VITE_API_URL=https://health-care-beckend.vercel.app/api/v1
+```
 
+### 4. Run the development server
+```bash
 npm run dev
-# or
-yarn dev
+```
+Open [http://localhost:5173](http://localhost:5173) to view the app in your browser.
 
+### 5. Build for production
+```bash
+npm run build
+```
+
+---
+
+## 📚 Project Structure
+```
+src/
+├── components/       # Reusable UI components
+├── pages/            # Page components
+├── context/          # Context API for state management
+├── services/         # API service calls
+├── App.jsx           # Main app component
+└── main.jsx          # Entry point
+```
+
+---
+
+## 👨‍💼 About Me
+I’m a **Full Stack Developer** passionate about building scalable and maintainable web applications. I focus on clean, reusable code and industry-level best practices.
+
+**Skills:** React.js, Tailwind CSS, Node.js, Express.js, MongoDB, PostgreSQL, JWT, API Integration  
+
+**Soft Skills:** Problem-solving, adaptability, teamwork, attention to detail  
+
+---
+
+## 📜 License
+This project is **MIT licensed**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🌟 Feedback
+If you like this project, give it a ⭐ on GitHub! Your support is appreciated.
 
